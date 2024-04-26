@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-ss
+  labels:
+    app: SS-app
+spec: 
+  replicas: 4
+  selector:
+    matchLabels:
+      app: ss-app
+  template:
+    metadata:
+      labels:
+        app: ss-app
+    spec:
+      containers:
+      - name: mariadb
+        image: mariadb
+        ports:
+        - containerPort: 3306
+          name: db
+        env:
+          - name: MARIADB_ROOT_PASSWORD
+            value: redhat
+            # - name: MARIADB_ROOT_PASSWORD
+            #   valueFrom:
+            #     confidMapKeyRef:
+            #        key: password
+            #        name: my-cm
